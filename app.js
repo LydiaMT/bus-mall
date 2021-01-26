@@ -88,7 +88,7 @@ function renderProducts() {
 
 // voting rounds
 var roundsStart = 0
-var roundsFinal = 3
+var roundsFinal = 25
 // random products to display each time
 var newProducts = generateRandomProducts();
 renderProducts(newProducts[0], newProducts[1], newProducts[2]);
@@ -111,6 +111,18 @@ function productClick (clickEvent) {
   }
 }
 
+// creaty empty arrays to fill with data for chart
+var votesByProduct = [];
+var timesSeen = [];
+var labelName = [];
+
+// fills empty arrays with data for chart
+for (var l = 0; l < allImages.length; l++) {
+  votesByProduct.push(allImages[l].timesClicked);
+  timesSeen.push(allImages[l].timesShown);
+  labelName.push(allImages[l].name);
+}
+
 // makes button appear after final click
 function buttonCreation (){
   var newButton = document.createElement('button');
@@ -118,36 +130,124 @@ function buttonCreation (){
   // removes event Listener - references productClick function
   productContainer.removeEventListener('click', productClick)
   newButton.addEventListener('click', function() {
-    //for (var j = 0 ; j < allImages.length; j++) {}
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',
           data: {
-              labels: allImages.name, // change to product. array of strings goes here
+              labels: labelName, // change to product. array of strings goes here
               datasets: [{
                   label: 'Times Clicked', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
-                  data: allImages.timesClicked,
-                  backgroundColor: [
+                    data: votesByProduct,
+                    backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
-
-                  ],
-                  borderColor: [
-                      'rgba(255, 99, 132, 1)',
-
-                  ],
-                  borderWidth: 1
-                },
-                {
-                  label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
-                  data: allImages.timesShown,
-                  backgroundColor: [
                       'rgba(54, 162, 235, 0.2)',
-                  ],
-                  borderColor: [
-                      'rgba(54, 162, 235, 1)',
-
-                  ],
-                  borderWidth: 1
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                    ],
+                    borderWidth: 1
+                  },
+                  {
+                  label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
+                    data: timesSeen,
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                    ],
+                    borderWidth: 1
             }]
           },
           options: {
@@ -167,13 +267,3 @@ function buttonCreation (){
 
 // To initalize the page - references productClick function
 productContainer.addEventListener('click', productClick);
-
-// this is an object constructor from chart.js
-// Demo code from Jacob
-var votesByProduct = [];
-var timesSeen = [];
-
-// clicks times clicked into its own specific array
-for (var k = 0; k < allImages.length; k++) {
-  votesByProduct.push(allImages[k].timesClicked);
-}
