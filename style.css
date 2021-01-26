@@ -1,0 +1,11 @@
+main {
+  margin: 0 auto;
+  width: 1000px;
+  height: 100%;
+  align-items: center;
+}
+
+img {
+  width: 300px;
+  align-items: center;
+}
