@@ -88,7 +88,7 @@ function renderProducts() {
 
 // voting rounds
 var roundsStart = 0
-var roundsFinal = 25
+var roundsFinal = 3
 // random products to display each time
 var newProducts = generateRandomProducts();
 renderProducts(newProducts[0], newProducts[1], newProducts[2]);
@@ -118,18 +118,55 @@ function buttonCreation (){
   // removes event Listener - references productClick function
   productContainer.removeEventListener('click', productClick)
   newButton.addEventListener('click', function() {
-    for (var j = 0 ; j < allImages.length; j++) {
-      var resultsList = document.createElement('p');
-      productContainer.appendChild(resultsList);
-      resultsList.textContent = (allImages[j].name + " had " + allImages[j].timesClicked + " votes, and was seen " + allImages[j].timesShown + " times")
-    }
-  });
+    //for (var j = 0 ; j < allImages.length; j++) {}
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+          data: {
+              labels: allImages.name, // change to product. array of strings goes here
+              datasets: [{
+                  label: 'Times Clicked', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
+                  data: allImages.timesClicked,
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+
+                  ],
+                  borderWidth: 1
+                },
+                {
+                  label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
+                  data: allImages.timesShown,
+                  backgroundColor: [
+                      'rgba(54, 162, 235, 0.2)',
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',
+
+                  ],
+                  borderWidth: 1
+            }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      })
+    });
+  
   productContainer.appendChild(newButton);
 }
 
 // To initalize the page - references productClick function
 productContainer.addEventListener('click', productClick);
-
 
 // this is an object constructor from chart.js
 // Demo code from Jacob
@@ -140,63 +177,3 @@ var timesSeen = [];
 for (var k = 0; k < allImages.length; k++) {
   votesByProduct.push(allImages[k].timesClicked);
 }
-// Chart creation. Grabs canvas element 'myChart' and select a context called ('2d')
-// Allows us to draw 2d shapes using the ctx variable
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'bar',
-    data: {
-        labels: allImages, // change to product. array of strings goes here
-        datasets: [{
-            label: 'Times Clicked', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
-            data: votesByProduct = [],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          },
-          {
-            label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
-            data: timesSeen = [],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-      }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-})
