@@ -57,41 +57,51 @@ function generateRandomProducts() {
 
 // this function rendors the images to the page and makes sure none of the 3 are from the previous set of 3. 
 // These variables the function is calling on were produced in the generateRandomProduct function
+var currentRenderedImages = [];
+
 function renderProducts() {
-  var currentRenderedImages = [leftProductImage.name, centerProductImage.name, rightProductImage.name];
   var newImages = generateRandomProducts()
-  while(
-    currentRenderedImages[0] === newImages[0].name ||
-    currentRenderedImages[1] === newImages[0].name ||
-    currentRenderedImages[2] === newImages[0].name ||
-    currentRenderedImages[0] === newImages[1].name ||
-    currentRenderedImages[1] === newImages[1].name ||
-    currentRenderedImages[2] === newImages[1].name ||
-    currentRenderedImages[0] === newImages[2].name ||
-    currentRenderedImages[1] === newImages[2].name ||
-    currentRenderedImages[2] === newImages[2].name
-  ) {
-    newImages = generateRandomProducts();
+  // if we have images we can compare them, otherwise we don't
+  if (currentRenderedImages.length > 0){
+    while(
+      currentRenderedImages[0].name === newImages[0].name ||
+      currentRenderedImages[1].name === newImages[0].name ||
+      currentRenderedImages[2].name === newImages[0].name ||
+      currentRenderedImages[0].name === newImages[1].name ||
+      currentRenderedImages[1].name === newImages[1].name ||
+      currentRenderedImages[2].name === newImages[1].name ||
+      currentRenderedImages[0].name === newImages[2].name ||
+      currentRenderedImages[1].name === newImages[2].name ||
+      currentRenderedImages[2].name === newImages[2].name
+    ) {
+      newImages = generateRandomProducts();
+    }
   }
+  // established 3 new images, emptying old array
+  currentRenderedImages = [];
+  
   leftProductImage.src = newImages[0].image;
   leftProductImage.name = newImages[0].name;
   newImages[0].timesShown++;
+  currentRenderedImages.push(newImages[0])
 
   centerProductImage.src = newImages[1].image;
   centerProductImage.name = newImages[1].name;
   newImages[1].timesShown++;
+  currentRenderedImages.push(newImages[1])
 
   rightProductImage.src = newImages[2].image;
   rightProductImage.name = newImages[2].name;
   newImages[2].timesShown++;
-} 
+  currentRenderedImages.push(newImages[2])
+  }
 
 // voting rounds
 var roundsStart = 0
 var roundsFinal = 25
 // random products to display each time
 var newProducts = generateRandomProducts();
-renderProducts(newProducts[0], newProducts[1], newProducts[2]);
+renderProducts();
 
 // function for clickEvents. Will be utilized to create button and to remove eventListener
 function productClick (clickEvent) {
@@ -111,18 +121,6 @@ function productClick (clickEvent) {
   }
 }
 
-// creaty empty arrays to fill with data for chart
-var votesByProduct = [];
-var timesSeen = [];
-var labelName = [];
-
-// fills empty arrays with data for chart
-for (var l = 0; l < allImages.length; l++) {
-  votesByProduct.push(allImages[l].timesClicked);
-  timesSeen.push(allImages[l].timesShown);
-  labelName.push(allImages[l].name);
-}
-
 // makes button appear after final click
 function buttonCreation (){
   var newButton = document.createElement('button');
@@ -130,6 +128,16 @@ function buttonCreation (){
   // removes event Listener - references productClick function
   productContainer.removeEventListener('click', productClick)
   newButton.addEventListener('click', function() {
+    // creaty empty arrays to fill with data for chart
+    var votesByProduct = [];
+    var timesSeen = [];
+    var labelName = [];  
+      // fills empty arrays with data for chart
+      for (var l = 0; l < allImages.length; l++) {
+        votesByProduct.push(allImages[l].timesClicked);
+        timesSeen.push(allImages[l].timesShown);
+        labelName.push(allImages[l].name);
+      }
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',
