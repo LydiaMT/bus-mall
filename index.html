@@ -4,7 +4,8 @@
 <head>
   <title>Busmall</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-
+  <!--script for charts. First cdn (content delivery network) loads js in the browser for you-->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 </head>
   
   <body>
@@ -14,8 +15,10 @@
       <img id="left-product" src="">
       <img id="center-product" src="">
       <img id="right-product" src="">
-
     </div>
+    <section>
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </section>
   </main>
   <footer></footer>
   <script src="app.js"></script>

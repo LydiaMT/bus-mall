@@ -55,24 +55,55 @@ function generateRandomProducts() {
   return [leftProduct, centerProduct, rightProduct];
 }
 
-// this function rendors the images to the page. These variables the function is calling on were produced in the generateRandomProduct function
-function renderProducts(leftProduct, centerProduct, rightProduct) {
-  leftProductImage.src = leftProduct.image;
-  leftProduct.timesShown++;
-  centerProductImage.src = centerProduct.image;
-  centerProduct.timesShown++;
-  rightProductImage.src = rightProduct.image;
-  rightProduct.timesShown++;
-} 
+// empty array of currently rendered images
+var currentRenderedImages = [];
+// this function rendors the images to the page and makes sure none of the 3 are from the previous set of 3. 
+// These variables the function is calling on were produced in the generateRandomProduct function
+function renderProducts() {
+  var newImages = generateRandomProducts()
+  // if we have images we can compare them, otherwise we don't
+  if (currentRenderedImages.length > 0){
+    while(
+      currentRenderedImages[0].name === newImages[0].name ||
+      currentRenderedImages[1].name === newImages[0].name ||
+      currentRenderedImages[2].name === newImages[0].name ||
+      currentRenderedImages[0].name === newImages[1].name ||
+      currentRenderedImages[1].name === newImages[1].name ||
+      currentRenderedImages[2].name === newImages[1].name ||
+      currentRenderedImages[0].name === newImages[2].name ||
+      currentRenderedImages[1].name === newImages[2].name ||
+      currentRenderedImages[2].name === newImages[2].name
+    ) {
+      newImages = generateRandomProducts();
+    }
+  }
+  // established 3 new images, emptying old array before the generateRandomProducts function
+  currentRenderedImages = [];
+  
+  // pushes 'new current' render images into the array
+  leftProductImage.src = newImages[0].image;
+  leftProductImage.name = newImages[0].name;
+  newImages[0].timesShown++;
+  currentRenderedImages.push(newImages[0])
 
+  centerProductImage.src = newImages[1].image;
+  centerProductImage.name = newImages[1].name;
+  newImages[1].timesShown++;
+  currentRenderedImages.push(newImages[1])
+
+  rightProductImage.src = newImages[2].image;
+  rightProductImage.name = newImages[2].name;
+  newImages[2].timesShown++;
+  currentRenderedImages.push(newImages[2])
+  }
+renderProducts();
 // voting rounds
 var roundsStart = 0
 var roundsFinal = 25
 // random products to display each time
 var newProducts = generateRandomProducts();
-renderProducts(newProducts[0], newProducts[1], newProducts[2]);
 
-// fucntion for clickEvents. Will be utilized to create button and to remove eventListener
+// function for clickEvents. Will be utilized to create button and to remove eventListener
 function productClick (clickEvent) {
   for (var i = 0; i < allImages.length; i++) {
     // if you have the target source and the target source includes the current image in the loop, log it
@@ -90,19 +121,139 @@ function productClick (clickEvent) {
   }
 }
 
-// makes button appear after final click
+// makes button appear after final click that brings up the chart when clicked
 function buttonCreation (){
   var newButton = document.createElement('button');
   newButton.textContent = "View Results"
   // removes event Listener - references productClick function
   productContainer.removeEventListener('click', productClick)
   newButton.addEventListener('click', function() {
-    for (var j = 0 ; j < allImages.length; j++) {
-      var resultsList = document.createElement('p');
-      productContainer.appendChild(resultsList);
-      resultsList.textContent = (allImages[j].name + " had " + allImages[j].timesClicked + " votes, and was seen " + allImages[j].timesShown + " times")
-    }
-  });
+    // creaty empty arrays to fill with data for chart
+    var votesByProduct = [];
+    var timesSeen = [];
+    var labelName = [];  
+      // fills empty arrays with data for chart
+      for (var l = 0; l < allImages.length; l++) {
+        votesByProduct.push(allImages[l].timesClicked);
+        timesSeen.push(allImages[l].timesShown);
+        labelName.push(allImages[l].name);
+      }
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+          data: {
+              labels: labelName, // change to product. array of strings goes here
+              datasets: [{
+                  label: 'Times Clicked', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
+                    data: votesByProduct,
+                    backgroundColor: [
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                    ],
+                    borderColor: [
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                    ],
+                    borderWidth: 3
+                  },
+                  {
+                  label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
+                    data: timesSeen,
+                    backgroundColor: [
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                    ],
+                    borderColor: [
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                    ],
+                    borderWidth: 3
+            }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      })
+    });
+  
   productContainer.appendChild(newButton);
 }
 
