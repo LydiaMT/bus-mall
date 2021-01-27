@@ -55,10 +55,10 @@ function generateRandomProducts() {
   return [leftProduct, centerProduct, rightProduct];
 }
 
+// empty array of currently rendered images
+var currentRenderedImages = [];
 // this function rendors the images to the page and makes sure none of the 3 are from the previous set of 3. 
 // These variables the function is calling on were produced in the generateRandomProduct function
-var currentRenderedImages = [];
-
 function renderProducts() {
   var newImages = generateRandomProducts()
   // if we have images we can compare them, otherwise we don't
@@ -77,9 +77,10 @@ function renderProducts() {
       newImages = generateRandomProducts();
     }
   }
-  // established 3 new images, emptying old array
+  // established 3 new images, emptying old array before the generateRandomProducts function
   currentRenderedImages = [];
   
+  // pushes 'new current' render images into the array
   leftProductImage.src = newImages[0].image;
   leftProductImage.name = newImages[0].name;
   newImages[0].timesShown++;
@@ -95,13 +96,12 @@ function renderProducts() {
   newImages[2].timesShown++;
   currentRenderedImages.push(newImages[2])
   }
-
+renderProducts();
 // voting rounds
 var roundsStart = 0
 var roundsFinal = 25
 // random products to display each time
 var newProducts = generateRandomProducts();
-renderProducts();
 
 // function for clickEvents. Will be utilized to create button and to remove eventListener
 function productClick (clickEvent) {
@@ -121,7 +121,7 @@ function productClick (clickEvent) {
   }
 }
 
-// makes button appear after final click
+// makes button appear after final click that brings up the chart when clicked
 function buttonCreation (){
   var newButton = document.createElement('button');
   newButton.textContent = "View Results"
@@ -147,115 +147,99 @@ function buttonCreation (){
                   label: 'Times Clicked', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
                     data: votesByProduct,
                     backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
+                      'rgba(35, 203, 167, 1)',
                     ],
                     borderColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
                     ],
-                    borderWidth: 1
+                    borderWidth: 3
                   },
                   {
                   label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
                     data: timesSeen,
                     backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
+                      'rgba(44, 130, 201, 1)',
                     ],
                     borderColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
                     ],
-                    borderWidth: 1
+                    borderWidth: 3
             }]
           },
           options: {
