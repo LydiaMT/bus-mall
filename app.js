@@ -8,29 +8,34 @@ function ProductImage (productName, image) {
   this.image = image; //this gets passed into the constructor
 }
 
-// list of all product images
-var allImages = [
-new ProductImage('bag', 'product_img/bag.jpg'),
-new ProductImage('banana', 'product_img/banana.jpg'),
-new ProductImage('bathroom', 'product_img/bathroom.jpg'),
-new ProductImage('boots', 'product_img/boots.jpg'),
-new ProductImage('breakfast', 'product_img/breakfast.jpg'),
-new ProductImage('bubblegum', 'product_img/bubblegum.jpg'),
-new ProductImage('chair', 'product_img/chair.jpg'),
-new ProductImage('cthulhu', 'product_img/cthulhu.jpg'),
-new ProductImage('dog duck', 'product_img/dog-duck.jpg'),
-new ProductImage('dragon', 'product_img/dragon.jpg'),
-new ProductImage('pen', 'product_img/pen.jpg'),
-new ProductImage('pet sweep', 'product_img/pet-sweep.jpg'),
-new ProductImage('scissors', 'product_img/scissors.jpg'),
-new ProductImage('shark', 'product_img/shark.jpg'),
-new ProductImage('sweep', 'product_img/sweep.png'),
-new ProductImage('tauntaun', 'product_img/tauntaun.jpg'),
-new ProductImage('unicorn', 'product_img/unicorn.jpg'),
-new ProductImage('usb', 'product_img/usb.gif'),
-new ProductImage('water can', 'product_img/water-can.jpg'),
-new ProductImage('wine glass', 'product_img/wine-glass.jpg'),
-];
+var allImages = []
+if (localStorage.getItem('allImages')) { // if allImages array is already stored on the page, use that
+  var allImagesString = localStorage.getItem('allImages');   //grabs the string, converts it to an array
+  allImages = JSON.parse(allImagesString);
+} else {
+  allImages = [
+  new ProductImage('bag', 'product_img/bag.jpg'),
+  new ProductImage('banana', 'product_img/banana.jpg'),
+  new ProductImage('bathroom', 'product_img/bathroom.jpg'),
+  new ProductImage('boots', 'product_img/boots.jpg'),
+  new ProductImage('breakfast', 'product_img/breakfast.jpg'),
+  new ProductImage('bubblegum', 'product_img/bubblegum.jpg'),
+  new ProductImage('chair', 'product_img/chair.jpg'),
+  new ProductImage('cthulhu', 'product_img/cthulhu.jpg'),
+  new ProductImage('dog duck', 'product_img/dog-duck.jpg'),
+  new ProductImage('dragon', 'product_img/dragon.jpg'),
+  new ProductImage('pen', 'product_img/pen.jpg'),
+  new ProductImage('pet sweep', 'product_img/pet-sweep.jpg'),
+  new ProductImage('scissors', 'product_img/scissors.jpg'),
+  new ProductImage('shark', 'product_img/shark.jpg'),
+  new ProductImage('sweep', 'product_img/sweep.png'),
+  new ProductImage('tauntaun', 'product_img/tauntaun.jpg'),
+  new ProductImage('unicorn', 'product_img/unicorn.jpg'),
+  new ProductImage('usb', 'product_img/usb.gif'),
+  new ProductImage('water can', 'product_img/water-can.jpg'),
+  new ProductImage('wine glass', 'product_img/wine-glass.jpg'),
+  ];
+} 
 
 // select elements from my HTML to render product images
 var productContainer = document.getElementById('product-container');
@@ -127,17 +132,23 @@ function buttonCreation (){
   newButton.textContent = "View Results"
   // removes event Listener - references productClick function
   productContainer.removeEventListener('click', productClick)
+  // takes array and turns it back into a string, then saves it to local storage    
+  var allImagesString = JSON.stringify(allImages)
+  localStorage.setItem('allImages', allImagesString)
+  
   newButton.addEventListener('click', function() {
     // creaty empty arrays to fill with data for chart
     var votesByProduct = [];
     var timesSeen = [];
     var labelName = [];  
+
       // fills empty arrays with data for chart
       for (var l = 0; l < allImages.length; l++) {
         votesByProduct.push(allImages[l].timesClicked);
         timesSeen.push(allImages[l].timesShown);
         labelName.push(allImages[l].name);
       }
+
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',
@@ -146,99 +157,15 @@ function buttonCreation (){
               datasets: [{
                   label: 'Times Clicked', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
                     data: votesByProduct,
-                    backgroundColor: [
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                      'rgba(35, 203, 167, 1)',
-                    ],
-                    borderColor: [
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                    ],
+                    backgroundColor: new Array(20).fill('rgba(35, 203, 167, 1)'),
+                    borderColor: new Array(20).fill('rgba(0, 0, 0, 1)'),
                     borderWidth: 3
                   },
                   {
                   label: 'Times Shown', // modify to times clicked. Duplicat this for times shown. array of numbers goes here
                     data: timesSeen,
-                    backgroundColor: [
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                      'rgba(44, 130, 201, 1)',
-                    ],
-                    borderColor: [
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                      'rgba(0, 0, 0, 1)',
-                    ],
+                    backgroundColor: new Array(20).fill('rgba(44, 130, 201, 1)'),
+                    borderColor: new Array(20).fill('rgba(0, 0, 0, 1)'),
                     borderWidth: 3
             }]
           },
@@ -253,7 +180,6 @@ function buttonCreation (){
           }
       })
     });
-  
   productContainer.appendChild(newButton);
 }
 

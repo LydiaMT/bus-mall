@@ -25,7 +25,14 @@ nav {
   border-bottom-style: solid thin black;
   width: 1000px;
   margin: 0 auto;
+}
 
+.linebreak {
+  height: 20px;
+  width: 1000px;
+  margin: 0 auto;
+  background-image: url(img/classic-bus.png);
+  background-size: contain;
 }
 
 h1 {
