@@ -124,6 +124,9 @@ function productClick (clickEvent) {
   if (roundsStart === roundsFinal) {
     buttonCreation()
   }
+  // takes array and turns it back into a string, then saves it to local storage    
+  var allImagesString = JSON.stringify(allImages)
+  localStorage.setItem('allImages', allImagesString)
 }
 
 // makes button appear after final click that brings up the chart when clicked
@@ -132,10 +135,7 @@ function buttonCreation (){
   newButton.textContent = "View Results"
   // removes event Listener - references productClick function
   productContainer.removeEventListener('click', productClick)
-  // takes array and turns it back into a string, then saves it to local storage    
-  var allImagesString = JSON.stringify(allImages)
-  localStorage.setItem('allImages', allImagesString)
-  
+
   newButton.addEventListener('click', function() {
     // creaty empty arrays to fill with data for chart
     var votesByProduct = [];
