@@ -1,3 +1,7 @@
+/* div, article, section {
+  border: solid thin black;
+} */
+
 .left {
   width: 400px;
   height: 100vh;
@@ -9,9 +13,6 @@
 .side-bar {
   padding: 10px;
 }
-/* div, article, section {
-  border: solid thin black;
-} */
 
 main {
   margin: 0 auto;
@@ -77,12 +78,16 @@ h3 {
 
 .product:hover {
   box-shadow: 10px 10px black;
+  -webkit-animation: swing .75s ease-in;
+  animation: swing .75s ease-in;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+
 }
 
 button {
   border: medium black solid;
   border-radius: 5px;
-  float: left;
   display: inline-block;
   align-items: center;
   margin: 15px 15px 15px 257px;
@@ -102,4 +107,27 @@ article {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 16px;
   padding: 80px 50px 50px 50px;
+}
+
+@-webkit-keyframes swing {
+  50%{
+      -webkit-transform: translateX(-1px);
+      transform: translateX(-1px);
+  } 
+  100%{
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+  }
+}
+@keyframes swing {
+  50%
+  {
+      -webkit-transform: translateX(-1px);
+      transform: translateX(-1px);
+  }
+  100%
+  {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+  }
 }
